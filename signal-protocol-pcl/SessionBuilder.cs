@@ -104,14 +104,14 @@ namespace libsignal
             uint messageVersion = message.getMessageVersion();
             IdentityKey theirIdentityKey = message.getIdentityKey();
 
-            if (!identityKeyStore.IsTrustedIdentity(remoteAddress.getName(), theirIdentityKey))
+            if (!identityKeyStore.IsTrustedIdentity(remoteAddress, theirIdentityKey))
             {
                 throw new UntrustedIdentityException(remoteAddress.getName(), theirIdentityKey);
             }
 
             May<uint> unsignedPreKeyId = processV3(sessionRecord, message);
 
-            identityKeyStore.SaveIdentity(remoteAddress.getName(), theirIdentityKey);
+            identityKeyStore.SaveIdentity(remoteAddress, theirIdentityKey);
             return unsignedPreKeyId;
         }
 
@@ -176,7 +176,7 @@ namespace libsignal
         {
             lock (SessionCipher.SESSION_LOCK)
             {
-                if (!identityKeyStore.IsTrustedIdentity(remoteAddress.getName(), preKey.getIdentityKey()))
+                if (!identityKeyStore.IsTrustedIdentity(remoteAddress, preKey.getIdentityKey()))
                 {
                     throw new UntrustedIdentityException(remoteAddress.getName(), preKey.getIdentityKey());
                 }
@@ -221,7 +221,7 @@ namespace libsignal
                 sessionRecord.getSessionState().setAliceBaseKey(ourBaseKey.getPublicKey().serialize());
 
                 sessionStore.StoreSession(remoteAddress, sessionRecord);
-                identityKeyStore.SaveIdentity(remoteAddress.getName(), preKey.getIdentityKey());
+                identityKeyStore.SaveIdentity(remoteAddress, preKey.getIdentityKey());
             }
         }
 
@@ -238,7 +238,7 @@ namespace libsignal
         {
             lock (SessionCipher.SESSION_LOCK)
             {
-                if (!identityKeyStore.IsTrustedIdentity(remoteAddress.getName(), message.getIdentityKey()))
+                if (!identityKeyStore.IsTrustedIdentity(remoteAddress, message.getIdentityKey()))
                 {
                     throw new UntrustedIdentityException(remoteAddress.getName(), message.getIdentityKey());
                 }
@@ -292,7 +292,7 @@ namespace libsignal
                                                 parameters);
 
             sessionStore.StoreSession(remoteAddress, sessionRecord);
-            identityKeyStore.SaveIdentity(remoteAddress.getName(), message.getIdentityKey());
+            identityKeyStore.SaveIdentity(remoteAddress, message.getIdentityKey());
 
             byte[] baseKeySignature = Curve.calculateSignature(parameters.getOurIdentityKey().getPrivateKey(),
                                                                parameters.getOurBaseKey().getPublicKey().serialize());
@@ -339,7 +339,7 @@ namespace libsignal
             }
 
             sessionStore.StoreSession(remoteAddress, sessionRecord);
-            identityKeyStore.SaveIdentity(remoteAddress.getName(), message.getIdentityKey());
+            identityKeyStore.SaveIdentity(remoteAddress, message.getIdentityKey());
 
         }
 

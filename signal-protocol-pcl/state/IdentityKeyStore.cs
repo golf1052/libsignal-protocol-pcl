@@ -49,10 +49,10 @@ namespace libsignal.state
          * <p>
          * Store a remote client's identity key as trusted.
          *
-         * @param name        The name of the remote client.
+         * @param address        The address of the remote client.
          * @param identityKey The remote client's identity key.
          */
-        bool SaveIdentity(String name, IdentityKey identityKey);
+        bool SaveIdentity(SignalProtocolAddress address, IdentityKey identityKey);
 
 
         /**
@@ -65,11 +65,11 @@ namespace libsignal.state
          * store.  Only if it mismatches an entry in the local store is it considered
          * 'untrusted.'
          *
-         * @param name        The name of the remote client.
+         * @param address        The address of the remote client.
          * @param identityKey The identity key to verify.
          * @return true if trusted, false if untrusted.
          */
-        bool IsTrustedIdentity(String name, IdentityKey identityKey);
+        bool IsTrustedIdentity(SignalProtocolAddress address, IdentityKey identityKey);
 
     }
 }

@@ -26,7 +26,7 @@ namespace libsignal.state.impl
 	public class InMemoryIdentityKeyStore : IdentityKeyStore
 	{
 
-		private readonly IDictionary<String, IdentityKey> trustedKeys = new Dictionary<String, IdentityKey>();
+		private readonly IDictionary<SignalProtocolAddress, IdentityKey> trustedKeys = new Dictionary<SignalProtocolAddress, IdentityKey>();
 
 		private readonly IdentityKeyPair identityKeyPair;
 		private readonly uint localRegistrationId;
@@ -51,16 +51,16 @@ namespace libsignal.state.impl
 			return localRegistrationId;
 		}
 
-		public bool SaveIdentity(String name, IdentityKey identityKey)
+		public bool SaveIdentity(SignalProtocolAddress address, IdentityKey identityKey)
 		{
-			trustedKeys[name] = identityKey; //put
+			trustedKeys[address] = identityKey; //put
 			return true;
 		}
 
-		public bool IsTrustedIdentity(String name, IdentityKey identityKey)
+		public bool IsTrustedIdentity(SignalProtocolAddress address, IdentityKey identityKey)
 		{
 			IdentityKey trusted;
-			trustedKeys.TryGetValue(name, out trusted); // get(name)
+			trustedKeys.TryGetValue(address, out trusted); // get(name)
 			return (trusted == null || trusted.Equals(identityKey));
 		}
 	}

@@ -127,7 +127,7 @@ namespace libsignal_test
             }
             catch (UntrustedIdentityException)
             {
-                bobStore.SaveIdentity(ALICE_ADDRESS.getName(), new PreKeySignalMessage(outgoingMessage.serialize()).getIdentityKey());
+                bobStore.SaveIdentity(ALICE_ADDRESS, new PreKeySignalMessage(outgoingMessage.serialize()).getIdentityKey());
             }
 
             plaintext = bobSessionCipher.decrypt(new PreKeySignalMessage(outgoingMessage.serialize()));
@@ -345,7 +345,7 @@ namespace libsignal_test
             }
             catch (UntrustedIdentityException)
             {
-                bobStore.SaveIdentity(ALICE_ADDRESS.getName(), aliceKeyExchangeMessage.getIdentityKey());
+                bobStore.SaveIdentity(ALICE_ADDRESS, aliceKeyExchangeMessage.getIdentityKey());
                 bobKeyExchangeMessage = bobSessionBuilder.process(aliceKeyExchangeMessage);
             }
 
