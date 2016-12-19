@@ -80,7 +80,6 @@
     <Compile Include="NoSessionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="protocol\CiphertextMessage.cs" />
-    <Compile Include="protocol\KeyExchangeMessage.cs" />
     <Compile Include="protocol\PreKeySignalMessage.cs" />
     <Compile Include="protocol\SenderKeyDistributionMessage.cs" />
     <Compile Include="protocol\SenderKeyMessage.cs" />
