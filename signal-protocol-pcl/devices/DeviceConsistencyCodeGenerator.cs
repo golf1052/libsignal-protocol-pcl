@@ -26,7 +26,7 @@ namespace libsignal.devices
 {
     public class DeviceConsistencyCodeGenerator
     {
-        public const int VERSION = 0;
+        public const int CODE_VERSION = 0;
         
         public static string generateFor(DeviceConsistencyCommitment commitment, List<DeviceConsistencySignature> signatures)
         {
@@ -36,7 +36,7 @@ namespace libsignal.devices
                 sortedSignatures.Sort(new SignatureComparator());
 
                 IHashAlgorithmProvider messageDigest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
-                byte[] hash = messageDigest.HashData(ByteUtil.shortToByteArray(VERSION));
+                byte[] hash = messageDigest.HashData(ByteUtil.shortToByteArray(CODE_VERSION));
                 messageDigest.HashData(commitment.toByteArray());
 
                 foreach (DeviceConsistencySignature signature in sortedSignatures)

@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using libsignal.util;
 using PCLCrypto;
 using static PCLCrypto.WinRTCrypto;
@@ -26,6 +27,8 @@ namespace libsignal.devices
 {
     public class DeviceConsistencyCommitment
     {
+        private static readonly string VERSION = "DeviceConsistencyCommitment_V0"; 
+
         private readonly int generation;
         private readonly byte[] serialized;
 
@@ -37,6 +40,7 @@ namespace libsignal.devices
                 sortedIdentityKeys.Sort(new IdentityKeyComparator());
 
                 IHashAlgorithmProvider messageDigest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
+                messageDigest.HashData(Encoding.UTF8.GetBytes(VERSION));
                 messageDigest.HashData(ByteUtil.intToByteArray(generation));
 
                 foreach (IdentityKey commitment in sortedIdentityKeys)

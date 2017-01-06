@@ -64,9 +64,9 @@ namespace signal_protocol_tests.devices
             DeviceConsistencyMessage receivedDeviceTwoMessage = new DeviceConsistencyMessage(deviceOneCommitment, deviceTwoMessage.getSerialized(), deviceTwo.getPublicKey());
             DeviceConsistencyMessage receivedDeviceThreeMessage = new DeviceConsistencyMessage(deviceOneCommitment, deviceThreeMessage.getSerialized(), deviceThree.getPublicKey());
 
-            CollectionAssert.AreEqual(deviceOneMessage.getSignature().getRevealBytes(), receivedDeviceOneMessage.getSignature().getRevealBytes());
-            CollectionAssert.AreEqual(deviceTwoMessage.getSignature().getRevealBytes(), receivedDeviceTwoMessage.getSignature().getRevealBytes());
-            CollectionAssert.AreEqual(deviceThreeMessage.getSignature().getRevealBytes(), receivedDeviceThreeMessage.getSignature().getRevealBytes());
+            CollectionAssert.AreEqual(deviceOneMessage.getSignature().getVrfOutput(), receivedDeviceOneMessage.getSignature().getVrfOutput());
+            CollectionAssert.AreEqual(deviceTwoMessage.getSignature().getVrfOutput(), receivedDeviceTwoMessage.getSignature().getVrfOutput());
+            CollectionAssert.AreEqual(deviceThreeMessage.getSignature().getVrfOutput(), receivedDeviceThreeMessage.getSignature().getVrfOutput());
 
             string codeOne = generateCode(deviceOneCommitment, deviceOneMessage, receivedDeviceTwoMessage, receivedDeviceThreeMessage);
             string codeTwo = generateCode(deviceTwoCommitment, deviceTwoMessage, receivedDeviceThreeMessage, receivedDeviceOneMessage);
