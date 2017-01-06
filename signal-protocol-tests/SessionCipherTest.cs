@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using signal_protocol_tests;
 
 namespace libsignal_test
 {
@@ -114,8 +115,8 @@ namespace libsignal_test
 
             ulong seed = DateUtil.currentTimeMillis();
 
-            Shuffle(aliceCiphertextMessages, new Random((int)seed));
-            Shuffle(alicePlaintextMessages, new Random((int)seed));
+            HelperMethods.Shuffle(aliceCiphertextMessages, new Random((int)seed));
+            HelperMethods.Shuffle(alicePlaintextMessages, new Random((int)seed));
 
             for (int i = 0; i < aliceCiphertextMessages.Count / 2; i++)
             {
@@ -134,8 +135,8 @@ namespace libsignal_test
 
             seed = DateUtil.currentTimeMillis();
 
-            Shuffle(bobCiphertextMessages, new Random((int)seed));
-            Shuffle(bobPlaintextMessages, new Random((int)seed));
+            HelperMethods.Shuffle(bobCiphertextMessages, new Random((int)seed));
+            HelperMethods.Shuffle(bobPlaintextMessages, new Random((int)seed));
 
             for (int i = 0; i < bobCiphertextMessages.Count / 2; i++)
             {
@@ -195,17 +196,6 @@ namespace libsignal_test
             RatchetingSession.initializeSession(bobSessionState, bobParameters);
         }
 
-        public static void Shuffle<T>(IList<T> list, Random rng)
-        {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
+        
     }
 }

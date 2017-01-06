@@ -98,5 +98,31 @@ namespace libsignal.ecc
                 throw new InvalidKeyException("Unknown type: " + signingKey.getType());
             }
         }
+
+        public static byte[] calculateUniqueSignature(ECPrivateKey signingKey, byte[] message)
+        {
+            if (signingKey.getType() == DJB_TYPE)
+            {
+                return Curve25519.getInstance(Curve25519ProviderType.BEST)
+                    .calculateUniqueSignature(((DjbECPrivateKey)signingKey).getPrivateKey(), message);
+            }
+            else
+            {
+                throw new InvalidKeyException("Unknown type: " + signingKey.getType());
+            }
+        }
+
+        public static bool verifyUniqueSignature(ECPublicKey signingKey, byte[] message, byte[] signature)
+        {
+            if (signingKey.getType() == DJB_TYPE)
+            {
+                return Curve25519.getInstance(Curve25519ProviderType.BEST)
+                    .verifyUniqueSignature(((DjbECPublicKey)signingKey).getPublicKey(), message, signature);
+            }
+            else
+            {
+                throw new InvalidKeyException("Unknown type: " + signingKey.getType());
+            }
+        }
     }
 }

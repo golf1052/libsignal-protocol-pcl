@@ -127,6 +127,16 @@ namespace libsignal.ecc
 		{
 			return provider.verifySignature(publicKey, message, signature);
 		}
+
+        public byte[] calculateUniqueSignature(byte[] privateKey, byte[] message)
+        {
+            return provider.calculateUniqueSignature(privateKey, message);
+        }
+
+        public bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature)
+        {
+            return provider.verifyUniqueSignature(publicKey, message, signature);
+        }
 	}
 
 	/// <summary>

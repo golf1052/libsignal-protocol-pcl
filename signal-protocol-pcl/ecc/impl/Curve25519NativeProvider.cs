@@ -33,7 +33,12 @@ namespace libsignal.ecc.impl
             throw new NotImplementedException();
         }
 
-		public byte[] generatePrivateKey(byte[] random)
+        public byte[] calculateUniqueSignature(byte[] privateKey, byte[] message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] generatePrivateKey(byte[] random)
 		{
             throw new NotImplementedException();
         }
@@ -52,5 +57,10 @@ namespace libsignal.ecc.impl
 		{
             throw new NotImplementedException();
         }
-	}
+
+        public bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

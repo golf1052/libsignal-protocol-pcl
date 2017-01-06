@@ -26,6 +26,8 @@ namespace libsignal.protocol {
     private static pb::FieldAccess.FieldAccessorTable<global::libsignal.protocol.SignalProtos.SenderKeyMessage, global::libsignal.protocol.SignalProtos.SenderKeyMessage.Builder> internal__static_SenderKeyMessage__FieldAccessorTable;
     private static pbd::MessageDescriptor internal__static_SenderKeyDistributionMessage__Descriptor;
     private static pb::FieldAccess.FieldAccessorTable<global::libsignal.protocol.SignalProtos.SenderKeyDistributionMessage, global::libsignal.protocol.SignalProtos.SenderKeyDistributionMessage.Builder> internal__static_SenderKeyDistributionMessage__FieldAccessorTable;
+    private static pbd::MessageDescriptor internal__static_DeviceConsistencyCodeMessage__Descriptor;
+    private static pb::FieldAccess.FieldAccessorTable<global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage, global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage.Builder> internal__static_DeviceConsistencyCodeMessage__FieldAccessorTable;
     #endregion
     #region Descriptor
     public static pbd::FileDescriptor Descriptor {
@@ -48,7 +50,9 @@ namespace libsignal.protocol {
             "c2FnZRIKCgJpZBgBIAEoDRIRCglpdGVyYXRpb24YAiABKA0SEgoKY2lwaGVy", 
             "dGV4dBgDIAEoDCJjChxTZW5kZXJLZXlEaXN0cmlidXRpb25NZXNzYWdlEgoK", 
             "AmlkGAEgASgNEhEKCWl0ZXJhdGlvbhgCIAEoDRIQCghjaGFpbktleRgDIAEo", 
-          "DBISCgpzaWduaW5nS2V5GAQgASgM"));
+            "DBISCgpzaWduaW5nS2V5GAQgASgMIkUKHERldmljZUNvbnNpc3RlbmN5Q29k", 
+            "ZU1lc3NhZ2USEgoKZ2VuZXJhdGlvbhgBIAEoDRIRCglzaWduYXR1cmUYAiAB", 
+          "KAw="));
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_SignalMessage__Descriptor = Descriptor.MessageTypes[0];
@@ -71,6 +75,10 @@ namespace libsignal.protocol {
         internal__static_SenderKeyDistributionMessage__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::libsignal.protocol.SignalProtos.SenderKeyDistributionMessage, global::libsignal.protocol.SignalProtos.SenderKeyDistributionMessage.Builder>(internal__static_SenderKeyDistributionMessage__Descriptor,
                 new string[] { "Id", "Iteration", "ChainKey", "SigningKey", });
+        internal__static_DeviceConsistencyCodeMessage__Descriptor = Descriptor.MessageTypes[5];
+        internal__static_DeviceConsistencyCodeMessage__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage, global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage.Builder>(internal__static_DeviceConsistencyCodeMessage__Descriptor,
+                new string[] { "Generation", "Signature", });
         return null;
       };
       pbd::FileDescriptor.InternalBuildGeneratedFileFrom(descriptorData,
@@ -2224,6 +2232,328 @@ namespace libsignal.protocol {
         }
       }
       static SenderKeyDistributionMessage() {
+        object.ReferenceEquals(global::libsignal.protocol.SignalProtos.Descriptor, null);
+      }
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public sealed partial class DeviceConsistencyCodeMessage : pb::GeneratedMessage<DeviceConsistencyCodeMessage, DeviceConsistencyCodeMessage.Builder> {
+      private DeviceConsistencyCodeMessage() { }
+      private static readonly DeviceConsistencyCodeMessage defaultInstance = new DeviceConsistencyCodeMessage().MakeReadOnly();
+      private static readonly string[] _deviceConsistencyCodeMessageFieldNames = new string[] { "generation", "signature" };
+      private static readonly uint[] _deviceConsistencyCodeMessageFieldTags = new uint[] { 8, 18 };
+      public static DeviceConsistencyCodeMessage DefaultInstance {
+        get { return defaultInstance; }
+      }
+      
+      public override DeviceConsistencyCodeMessage DefaultInstanceForType {
+        get { return DefaultInstance; }
+      }
+      
+      protected override DeviceConsistencyCodeMessage ThisMessage {
+        get { return this; }
+      }
+      
+      public static pbd::MessageDescriptor Descriptor {
+        get { return global::libsignal.protocol.SignalProtos.internal__static_DeviceConsistencyCodeMessage__Descriptor; }
+      }
+      
+      protected override pb::FieldAccess.FieldAccessorTable<DeviceConsistencyCodeMessage, DeviceConsistencyCodeMessage.Builder> InternalFieldAccessors {
+        get { return global::libsignal.protocol.SignalProtos.internal__static_DeviceConsistencyCodeMessage__FieldAccessorTable; }
+      }
+      
+      public const int GenerationFieldNumber = 1;
+      private bool hasGeneration;
+      private uint generation_;
+      public bool HasGeneration {
+        get { return hasGeneration; }
+      }
+      [global::System.CLSCompliant(false)]
+      public uint Generation {
+        get { return generation_; }
+      }
+      
+      public const int SignatureFieldNumber = 2;
+      private bool hasSignature;
+      private pb::ByteString signature_ = pb::ByteString.Empty;
+      public bool HasSignature {
+        get { return hasSignature; }
+      }
+      public pb::ByteString Signature {
+        get { return signature_; }
+      }
+      
+      public override bool IsInitialized {
+        get {
+          return true;
+        }
+      }
+      
+      public override void WriteTo(pb::ICodedOutputStream output) {
+        CalcSerializedSize();
+        string[] field_names = _deviceConsistencyCodeMessageFieldNames;
+        if (hasGeneration) {
+          output.WriteUInt32(1, field_names[0], Generation);
+        }
+        if (hasSignature) {
+          output.WriteBytes(2, field_names[1], Signature);
+        }
+        UnknownFields.WriteTo(output);
+      }
+      
+      private int memoizedSerializedSize = -1;
+      public override int SerializedSize {
+        get {
+          int size = memoizedSerializedSize;
+          if (size != -1) return size;
+          return CalcSerializedSize();
+        }
+      }
+      
+      private int CalcSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        if (hasGeneration) {
+          size += pb::CodedOutputStream.ComputeUInt32Size(1, Generation);
+        }
+        if (hasSignature) {
+          size += pb::CodedOutputStream.ComputeBytesSize(2, Signature);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(pb::ByteString data) {
+        return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+        return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(byte[] data) {
+        return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+        return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(global::System.IO.Stream input) {
+        return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+        return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseDelimitedFrom(global::System.IO.Stream input) {
+        return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+        return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(pb::ICodedInputStream input) {
+        return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+      }
+      public static DeviceConsistencyCodeMessage ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+      }
+      private DeviceConsistencyCodeMessage MakeReadOnly() {
+        return this;
+      }
+      
+      public static Builder CreateBuilder() { return new Builder(); }
+      public override Builder ToBuilder() { return CreateBuilder(this); }
+      public override Builder CreateBuilderForType() { return new Builder(); }
+      public static Builder CreateBuilder(DeviceConsistencyCodeMessage prototype) {
+        return new Builder(prototype);
+      }
+      
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class Builder : pb::GeneratedBuilder<DeviceConsistencyCodeMessage, Builder> {
+        protected override Builder ThisBuilder {
+          get { return this; }
+        }
+        public Builder() {
+          result = DefaultInstance;
+          resultIsReadOnly = true;
+        }
+        internal Builder(DeviceConsistencyCodeMessage cloneFrom) {
+          result = cloneFrom;
+          resultIsReadOnly = true;
+        }
+        
+        private bool resultIsReadOnly;
+        private DeviceConsistencyCodeMessage result;
+        
+        private DeviceConsistencyCodeMessage PrepareBuilder() {
+          if (resultIsReadOnly) {
+            DeviceConsistencyCodeMessage original = result;
+            result = new DeviceConsistencyCodeMessage();
+            resultIsReadOnly = false;
+            MergeFrom(original);
+          }
+          return result;
+        }
+        
+        public override bool IsInitialized {
+          get { return result.IsInitialized; }
+        }
+        
+        protected override DeviceConsistencyCodeMessage MessageBeingBuilt {
+          get { return PrepareBuilder(); }
+        }
+        
+        public override Builder Clear() {
+          result = DefaultInstance;
+          resultIsReadOnly = true;
+          return this;
+        }
+        
+        public override Builder Clone() {
+          if (resultIsReadOnly) {
+            return new Builder(result);
+          } else {
+            return new Builder().MergeFrom(result);
+          }
+        }
+        
+        public override pbd::MessageDescriptor DescriptorForType {
+          get { return global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage.Descriptor; }
+        }
+        
+        public override DeviceConsistencyCodeMessage DefaultInstanceForType {
+          get { return global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage.DefaultInstance; }
+        }
+        
+        public override DeviceConsistencyCodeMessage BuildPartial() {
+          if (resultIsReadOnly) {
+            return result;
+          }
+          resultIsReadOnly = true;
+          return result.MakeReadOnly();
+        }
+        
+        public override Builder MergeFrom(pb::IMessage other) {
+          if (other is DeviceConsistencyCodeMessage) {
+            return MergeFrom((DeviceConsistencyCodeMessage) other);
+          } else {
+            base.MergeFrom(other);
+            return this;
+          }
+        }
+        
+        public override Builder MergeFrom(DeviceConsistencyCodeMessage other) {
+          if (other == global::libsignal.protocol.SignalProtos.DeviceConsistencyCodeMessage.DefaultInstance) return this;
+          PrepareBuilder();
+          if (other.HasGeneration) {
+            Generation = other.Generation;
+          }
+          if (other.HasSignature) {
+            Signature = other.Signature;
+          }
+          this.MergeUnknownFields(other.UnknownFields);
+          return this;
+        }
+        
+        public override Builder MergeFrom(pb::ICodedInputStream input) {
+          return MergeFrom(input, pb::ExtensionRegistry.Empty);
+        }
+        
+        public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+          PrepareBuilder();
+          pb::UnknownFieldSet.Builder unknownFields = null;
+          uint tag;
+          string field_name;
+          while (input.ReadTag(out tag, out field_name)) {
+            if(tag == 0 && field_name != null) {
+              int field_ordinal = global::System.Array.BinarySearch(_deviceConsistencyCodeMessageFieldNames, field_name, global::System.StringComparer.Ordinal);
+              if(field_ordinal >= 0)
+                tag = _deviceConsistencyCodeMessageFieldTags[field_ordinal];
+              else {
+                if (unknownFields == null) {
+                  unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                }
+                ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                continue;
+              }
+            }
+            switch (tag) {
+              case 0: {
+                throw pb::InvalidProtocolBufferException.InvalidTag();
+              }
+              default: {
+                if (pb::WireFormat.IsEndGroupTag(tag)) {
+                  if (unknownFields != null) {
+                    this.UnknownFields = unknownFields.Build();
+                  }
+                  return this;
+                }
+                if (unknownFields == null) {
+                  unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                }
+                ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                break;
+              }
+              case 8: {
+                result.hasGeneration = input.ReadUInt32(ref result.generation_);
+                break;
+              }
+              case 18: {
+                result.hasSignature = input.ReadBytes(ref result.signature_);
+                break;
+              }
+            }
+          }
+          
+          if (unknownFields != null) {
+            this.UnknownFields = unknownFields.Build();
+          }
+          return this;
+        }
+        
+        
+        public bool HasGeneration {
+          get { return result.hasGeneration; }
+        }
+        [global::System.CLSCompliant(false)]
+        public uint Generation {
+          get { return result.Generation; }
+          set { SetGeneration(value); }
+        }
+        [global::System.CLSCompliant(false)]
+        public Builder SetGeneration(uint value) {
+          PrepareBuilder();
+          result.hasGeneration = true;
+          result.generation_ = value;
+          return this;
+        }
+        public Builder ClearGeneration() {
+          PrepareBuilder();
+          result.hasGeneration = false;
+          result.generation_ = 0;
+          return this;
+        }
+        
+        public bool HasSignature {
+          get { return result.hasSignature; }
+        }
+        public pb::ByteString Signature {
+          get { return result.Signature; }
+          set { SetSignature(value); }
+        }
+        public Builder SetSignature(pb::ByteString value) {
+          pb::ThrowHelper.ThrowIfNull(value, "value");
+          PrepareBuilder();
+          result.hasSignature = true;
+          result.signature_ = value;
+          return this;
+        }
+        public Builder ClearSignature() {
+          PrepareBuilder();
+          result.hasSignature = false;
+          result.signature_ = pb::ByteString.Empty;
+          return this;
+        }
+      }
+      static DeviceConsistencyCodeMessage() {
         object.ReferenceEquals(global::libsignal.protocol.SignalProtos.Descriptor, null);
       }
     }

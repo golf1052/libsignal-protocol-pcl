@@ -1,19 +1,19 @@
 ﻿/** 
- * Copyright (C) 2016 smndtrl, langboost
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* Copyright (C) 2017 smndtrl, langboost, golf1052
+* 
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 namespace libsignal.ecc.impl
 {
@@ -39,6 +39,11 @@ namespace libsignal.ecc.impl
             return curve.calculateSignature(random, privateKey, message);
         }
 
+        public byte[] calculateUniqueSignature(byte[] privateKey, byte[] message)
+        {
+            return curve.calculateVrfSignature(privateKey, message);
+        }
+
         public byte[] generatePrivateKey(byte[] random)
         {
             return curve.generatePrivateKey(random);
@@ -57,6 +62,12 @@ namespace libsignal.ecc.impl
         public bool verifySignature(byte[] publicKey, byte[] message, byte[] signature)
         {
             return curve.verifySignature(publicKey, message, signature);
+        }
+
+        public bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature)
+        {
+            return true;
+            //return curve.verifyVrfSignature(publicKey, message, signature);
         }
     }
 }

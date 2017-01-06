@@ -29,5 +29,7 @@
 		byte[] generatePublicKey(byte[] privateKey);
 		bool isNative();
 		bool verifySignature(byte[] publicKey, byte[] message, byte[] signature);
+        byte[] calculateUniqueSignature(byte[] privateKey, byte[] message);
+        bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature);
 	}
 }
