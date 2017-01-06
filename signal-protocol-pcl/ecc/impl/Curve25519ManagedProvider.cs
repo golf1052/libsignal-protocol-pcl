@@ -39,7 +39,7 @@ namespace libsignal.ecc.impl
             return curve.calculateSignature(random, privateKey, message);
         }
 
-        public byte[] calculateUniqueSignature(byte[] privateKey, byte[] message)
+        public byte[] calculateVrfSignature(byte[] privateKey, byte[] message)
         {
             return curve.calculateVrfSignature(privateKey, message);
         }
@@ -64,10 +64,9 @@ namespace libsignal.ecc.impl
             return curve.verifySignature(publicKey, message, signature);
         }
 
-        public bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature)
+        public byte[] verifyVrfSignature(byte[] publicKey, byte[] message, byte[] signature)
         {
-            return true;
-            //return curve.verifyVrfSignature(publicKey, message, signature);
+            return curve.verifyVrfSignature(publicKey, message, signature);
         }
     }
 }

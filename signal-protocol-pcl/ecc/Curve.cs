@@ -1,5 +1,5 @@
 ﻿/** 
- * Copyright (C) 2016 smndtrl, langboost
+ * Copyright (C) 2017 smndtrl, langboost, golf1052
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,12 +99,12 @@ namespace libsignal.ecc
             }
         }
 
-        public static byte[] calculateUniqueSignature(ECPrivateKey signingKey, byte[] message)
+        public static byte[] calculateVrfSignature(ECPrivateKey signingKey, byte[] message)
         {
             if (signingKey.getType() == DJB_TYPE)
             {
                 return Curve25519.getInstance(Curve25519ProviderType.BEST)
-                    .calculateUniqueSignature(((DjbECPrivateKey)signingKey).getPrivateKey(), message);
+                    .calculateVrfSignature(((DjbECPrivateKey)signingKey).getPrivateKey(), message);
             }
             else
             {
@@ -112,12 +112,12 @@ namespace libsignal.ecc
             }
         }
 
-        public static bool verifyUniqueSignature(ECPublicKey signingKey, byte[] message, byte[] signature)
+        public static byte[] verifyVrfSignature(ECPublicKey signingKey, byte[] message, byte[] signature)
         {
             if (signingKey.getType() == DJB_TYPE)
             {
                 return Curve25519.getInstance(Curve25519ProviderType.BEST)
-                    .verifyUniqueSignature(((DjbECPublicKey)signingKey).getPublicKey(), message, signature);
+                    .verifyVrfSignature(((DjbECPublicKey)signingKey).getPublicKey(), message, signature);
             }
             else
             {

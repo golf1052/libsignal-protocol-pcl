@@ -19,26 +19,37 @@ using System.Diagnostics;
 using Google.ProtocolBuffers;
 using libsignal.devices;
 using libsignal.ecc;
+using org.whispersystems.curve25519;
 
 namespace libsignal.protocol
 {
     public class DeviceConsistencyMessage
     {
         private readonly DeviceConsistencySignature signature;
+        private readonly int generation;
         private readonly byte[] serialized;
 
         public DeviceConsistencyMessage(DeviceConsistencyCommitment commitment, IdentityKeyPair identityKeyPair)
         {
             try
             {
-                this.signature = new DeviceConsistencySignature(Curve.calculateUniqueSignature(identityKeyPair.getPrivateKey(), commitment.toByteArray()));
+                byte[] signatureBytes = Curve.calculateVrfSignature(identityKeyPair.getPrivateKey(), commitment.toByteArray());
+                byte[] vrfOutputBytes = Curve.verifyVrfSignature(identityKeyPair.getPublicKey().getPublicKey(), commitment.toByteArray(), signatureBytes);
+
+                this.generation = commitment.getGeneration();
+                this.signature = new DeviceConsistencySignature(signatureBytes, vrfOutputBytes);
                 this.serialized = SignalProtos.DeviceConsistencyCodeMessage.CreateBuilder()
                     .SetGeneration((uint)commitment.getGeneration())
-                    .SetSignature(ByteString.CopyFrom(signature.toByteArray()))
+                    .SetSignature(ByteString.CopyFrom(signature.getSignature()))
                     .Build()
                     .ToByteArray();
             }
             catch (InvalidKeyException e)
+            {
+                Debug.Assert(false);
+                throw e;
+            }
+            catch (VrfSignatureVerificationFailedException e)
             {
                 Debug.Assert(false);
                 throw e;
@@ -50,13 +61,10 @@ namespace libsignal.protocol
             try
             {
                 SignalProtos.DeviceConsistencyCodeMessage message = SignalProtos.DeviceConsistencyCodeMessage.ParseFrom(serialized);
+                byte[] vrfOutputBytes = Curve.verifyVrfSignature(identityKey.getPublicKey(), commitment.toByteArray(), message.Signature.ToByteArray());
 
-                if (!Curve.verifyUniqueSignature(identityKey.getPublicKey(), commitment.toByteArray(), message.Signature.ToByteArray()))
-                {
-                    throw new InvalidMessageException("Bad signature!");
-                }
-
-                this.signature = new DeviceConsistencySignature(message.Signature.ToByteArray());
+                this.generation = (int)message.Generation;
+                this.signature = new DeviceConsistencySignature(message.Signature.ToByteArray(), vrfOutputBytes);
                 this.serialized = serialized;
             }
             catch (InvalidProtocolBufferException e)
@@ -64,6 +72,10 @@ namespace libsignal.protocol
                 throw new InvalidMessageException(e);
             }
             catch (InvalidKeyException e)
+            {
+                throw new InvalidMessageException(e);
+            }
+            catch (VrfSignatureVerificationFailedException e)
             {
                 throw new InvalidMessageException(e);
             }
@@ -77,6 +89,11 @@ namespace libsignal.protocol
         public DeviceConsistencySignature getSignature()
         {
             return signature;
+        }
+
+        public int getGeneration()
+        {
+            return generation;
         }
     }
 }

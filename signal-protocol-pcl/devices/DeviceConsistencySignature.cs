@@ -15,29 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
-
 namespace libsignal.devices
 {
     public class DeviceConsistencySignature
     {
-        private byte[] serialized;
+        private readonly byte[] signature;
+        private readonly byte[] vrfOutput;
 
-        public DeviceConsistencySignature(byte[] serialized)
+        public DeviceConsistencySignature(byte[] signature, byte[] vrfOutput)
         {
-            this.serialized = serialized;
+            this.signature = signature;
+            this.vrfOutput = vrfOutput;
         }
 
-        public byte[] getRevealBytes()
+        public byte[] getVrfOutput()
         {
-            byte[] reveal = new byte[32];
-            Buffer.BlockCopy(serialized, 0, reveal, 0, reveal.Length);
-            return reveal;
+            return vrfOutput;
         }
 
-        public byte[] toByteArray()
+        public byte[] getSignature()
         {
-            return serialized;
+            return signature;
         }
     }
 }

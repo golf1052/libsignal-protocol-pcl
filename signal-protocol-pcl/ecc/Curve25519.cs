@@ -128,14 +128,14 @@ namespace libsignal.ecc
 			return provider.verifySignature(publicKey, message, signature);
 		}
 
-        public byte[] calculateUniqueSignature(byte[] privateKey, byte[] message)
+        public byte[] calculateVrfSignature(byte[] privateKey, byte[] message)
         {
-            return provider.calculateUniqueSignature(privateKey, message);
+            return provider.calculateVrfSignature(privateKey, message);
         }
 
-        public bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature)
+        public byte[] verifyVrfSignature(byte[] publicKey, byte[] message, byte[] signature)
         {
-            return provider.verifyUniqueSignature(publicKey, message, signature);
+            return provider.verifyVrfSignature(publicKey, message, signature);
         }
 	}
 

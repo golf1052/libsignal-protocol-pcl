@@ -41,7 +41,7 @@ namespace libsignal.devices
 
                 foreach (DeviceConsistencySignature signature in sortedSignatures)
                 {
-                    hash = messageDigest.HashData(signature.getRevealBytes());
+                    hash = messageDigest.HashData(signature.getVrfOutput());
                 }
 
                 string digits = getEncodedChunk(hash, 0) + getEncodedChunk(hash, 5);
@@ -65,7 +65,7 @@ namespace libsignal.devices
     {
         public int Compare(DeviceConsistencySignature first, DeviceConsistencySignature second)
         {
-            return compare(first.toByteArray(), second.toByteArray());
+            return compare(first.getSignature(), second.getSignature());
         }
     }
 }

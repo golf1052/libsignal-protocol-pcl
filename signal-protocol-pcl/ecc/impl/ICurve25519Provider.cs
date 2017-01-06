@@ -1,5 +1,5 @@
 ﻿/** 
- * Copyright (C) 2015 langboost
+ * Copyright (C) 2017 langboost, golf1052
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 		byte[] generatePublicKey(byte[] privateKey);
 		bool isNative();
 		bool verifySignature(byte[] publicKey, byte[] message, byte[] signature);
-        byte[] calculateUniqueSignature(byte[] privateKey, byte[] message);
-        bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature);
+        byte[] calculateVrfSignature(byte[] privateKey, byte[] message);
+        byte[] verifyVrfSignature(byte[] publicKey, byte[] message, byte[] signature);
 	}
 }

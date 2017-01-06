@@ -1,5 +1,5 @@
 ﻿/** 
- * Copyright (C) 2016 smndtrl, langboost
+ * Copyright (C) 2017 smndtrl, langboost, golf1052
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ namespace libsignal.ecc.impl
             throw new NotImplementedException();
         }
 
-        public byte[] calculateUniqueSignature(byte[] privateKey, byte[] message)
+        public byte[] calculateVrfSignature(byte[] privateKey, byte[] message)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +58,7 @@ namespace libsignal.ecc.impl
             throw new NotImplementedException();
         }
 
-        public bool verifyUniqueSignature(byte[] publicKey, byte[] message, byte[] signature)
+        public byte[] verifyVrfSignature(byte[] publicKey, byte[] message, byte[] signature)
         {
             throw new NotImplementedException();
         }
