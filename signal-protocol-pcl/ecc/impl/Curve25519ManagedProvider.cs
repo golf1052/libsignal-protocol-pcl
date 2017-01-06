@@ -31,7 +31,7 @@ namespace libsignal.ecc.impl
 
         public byte[] calculateAgreement(byte[] ourPrivate, byte[] theirPublic)
         {
-            return curve.calculateAgreement(ourPrivate, theirPublic);
+            return curve.calculateAgreement(theirPublic, ourPrivate);
         }
 
         public byte[] calculateSignature(byte[] random, byte[] privateKey, byte[] message)
