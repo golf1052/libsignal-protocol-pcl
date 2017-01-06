@@ -1,5 +1,5 @@
 /** 
- * Copyright (C) 2016 smndtrl, langboost
+ * Copyright (C) 2017 smndtrl, langboost, golf1052
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,34 +14,52 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 using Google.ProtocolBuffers;
 using libsignal;
 using libsignal.util;
 using System.Text;
 using static libsignal.fingerprint.FingerprintProtos;
+using System.Collections.Generic;
+using PCLCrypto;
+using static PCLCrypto.WinRTCrypto;
+using System;
+using System.Diagnostics;
 
 namespace org.whispersystems.libsignal.fingerprint
 {
 
-    public class ScannableFingerprint
+    public class ScannableFingerprint : BaseFingerprintType
     {
+        private static readonly int VERSION = 0;
 
         private readonly CombinedFingerprint combinedFingerprint;
 
-        public ScannableFingerprint(int version,
-                                    string localStableIdentifier, IdentityKey localIdentityKey,
-                                    string remoteStableIdentifier, IdentityKey remoteIdentityKey)
+        internal ScannableFingerprint(string localStableIdentifier, IdentityKey localIdentityKey,
+            string remoteStableIdentifier, IdentityKey remoteIdentityKey)
         {
-            this.combinedFingerprint = CombinedFingerprint.CreateBuilder()
-                                                          .SetVersion((uint)version)
-                                                          .SetLocalFingerprint(FingerprintData.CreateBuilder()
-                                                                                              .SetIdentifier(ByteString.CopyFrom(Encoding.UTF8.GetBytes(localStableIdentifier)))
-                                                                                              .SetPublicKey(ByteString.CopyFrom(localIdentityKey.serialize())))
-                                                          .SetRemoteFingerprint(FingerprintData.CreateBuilder()
-                                                                                               .SetIdentifier(ByteString.CopyFrom(Encoding.UTF8.GetBytes(remoteStableIdentifier)))
-                                                                                               .SetPublicKey(ByteString.CopyFrom(remoteIdentityKey.serialize())))
-                                                          .Build();
+            this.combinedFingerprint = initializeCombinedFingerprint(localStableIdentifier, localIdentityKey.serialize(),
+                remoteStableIdentifier, remoteIdentityKey.serialize());
+        }
+
+        internal ScannableFingerprint(string localStableIdentifier, List<IdentityKey> localIdentityKeys,
+            string remoteStableIdentifier, List<IdentityKey> remoteIdentityKeys)
+        {
+            try
+            {
+                IHashAlgorithmProvider messageDigest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
+
+                byte[] localIdentityLogicalKey = messageDigest.HashData(getLogicalKeyBytes(localIdentityKeys));
+                byte[] remoteIdentityLogicalKey = messageDigest.HashData(getLogicalKeyBytes(remoteIdentityKeys));
+
+                this.combinedFingerprint = initializeCombinedFingerprint(localStableIdentifier, localIdentityLogicalKey,
+                    remoteStableIdentifier, remoteIdentityLogicalKey);
+            }
+            catch (Exception e)
+            {
+                Debug.Assert(false, e.Message);
+                throw e;
+            }
         }
 
         /**
@@ -91,6 +109,20 @@ namespace org.whispersystems.libsignal.fingerprint
             {
                 throw new FingerprintParsingException(e);
             }
+        }
+
+        private CombinedFingerprint initializeCombinedFingerprint(string localStableIdentifier, byte[] localIdentityKeyBytes,
+            string remoteStableIdentifier, byte[] remoteIdentityKeyBytes)
+        {
+            return CombinedFingerprint.CreateBuilder()
+                .SetVersion((uint)VERSION)
+                .SetLocalFingerprint(FingerprintData.CreateBuilder()
+                    .SetIdentifier(ByteString.CopyFrom(Encoding.UTF8.GetBytes(localStableIdentifier)))
+                    .SetPublicKey(ByteString.CopyFrom(localIdentityKeyBytes)))
+                .SetRemoteFingerprint(FingerprintData.CreateBuilder()
+                    .SetIdentifier(ByteString.CopyFrom(Encoding.UTF8.GetBytes(remoteStableIdentifier)))
+                    .SetPublicKey(ByteString.CopyFrom(remoteIdentityKeyBytes)))
+                .Build();
         }
     }
 }

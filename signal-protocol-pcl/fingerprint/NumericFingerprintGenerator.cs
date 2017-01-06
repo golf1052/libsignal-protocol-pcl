@@ -1,5 +1,5 @@
 /** 
- * Copyright (C) 2016 smndtrl, langboost
+ * Copyright (C) 2017 smndtrl, langboost, golf1052
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 using libsignal;
 using libsignal.util;
 using PCLCrypto;
@@ -22,16 +22,14 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using static PCLCrypto.WinRTCrypto;
+using System.Collections.Generic;
 
 namespace org.whispersystems.libsignal.fingerprint
 {
 
     public class NumericFingerprintGenerator : FingerprintGenerator
     {
-
-        private static readonly int VERSION = 0;
-
-        private readonly long iterations;
+        private readonly int iterations;
 
         /**
          * Construct a fingerprint generator for 60 digit numerics.
@@ -46,7 +44,7 @@ namespace org.whispersystems.libsignal.fingerprint
          *                   - 1400 > 110 bits
          *                   - 5200 > 112 bits
          */
-        public NumericFingerprintGenerator(long iterations)
+        public NumericFingerprintGenerator(int iterations)
         {
             this.iterations = iterations;
         }
@@ -66,51 +64,45 @@ namespace org.whispersystems.libsignal.fingerprint
         public Fingerprint createFor(string localStableIdentifier, IdentityKey localIdentityKey,
                                string remoteStableIdentifier, IdentityKey remoteIdentityKey)
         {
-            DisplayableFingerprint displayableFingerprint = new DisplayableFingerprint(getDisplayStringFor(localStableIdentifier, localIdentityKey),
-                                                                                       getDisplayStringFor(remoteStableIdentifier, remoteIdentityKey));
+            DisplayableFingerprint displayableFingerprint = new DisplayableFingerprint(iterations,
+                localStableIdentifier,
+                localIdentityKey,
+                remoteStableIdentifier,
+                remoteIdentityKey);
 
-            ScannableFingerprint scannableFingerprint = new ScannableFingerprint(VERSION,
-                                                                                 localStableIdentifier, localIdentityKey,
+            ScannableFingerprint scannableFingerprint = new ScannableFingerprint(localStableIdentifier, localIdentityKey,
                                                                                  remoteStableIdentifier, remoteIdentityKey);
 
             return new Fingerprint(displayableFingerprint, scannableFingerprint);
         }
 
-        private string getDisplayStringFor(string stableIdentifier, IdentityKey identityKey)
+        /**
+        * Generate a scannable and displayble fingerprint for logical identities that have multiple
+        * physical keys.
+        *
+        * Do not trust the output of this unless you've been through the device consistency process
+        * for the provided localIdentityKeys.
+        *
+        * @param localStableIdentifier The client's "stable" identifier.
+        * @param localIdentityKeys The client's collection of physical identity keys.
+        * @param remoteStableIdentifier The remote party's "stable" identifier.
+        * @param remoteIdentityKeys The remote party's collection of physical identity key.
+        * @return A unique fingerprint for this conversation.
+        */
+        public Fingerprint createFor(string localStableIdentifier, List<IdentityKey> localIdentityKeys,
+            string remoteStableIdentifier, List<IdentityKey> remoteIdentityKeys)
         {
-            try
-            {
-                IHashAlgorithmProvider digest = HashAlgorithmProvider.OpenAlgorithm(PCLCrypto.HashAlgorithm.Sha512);
+            DisplayableFingerprint displayableFingerprint = new DisplayableFingerprint(iterations,
+                localStableIdentifier,
+                localIdentityKeys,
+                remoteStableIdentifier,
+                remoteIdentityKeys);
 
-                byte[] publicKey = identityKey.getPublicKey().serialize();
-                byte[] hash = ByteUtil.combine(ByteUtil.shortToByteArray(VERSION),
-                                                           publicKey, Encoding.UTF8.GetBytes(stableIdentifier));
+            ScannableFingerprint scannableFingerprint = new ScannableFingerprint(localStableIdentifier, localIdentityKeys,
+                remoteStableIdentifier, remoteIdentityKeys);
 
-                for (int i = 0; i < iterations; i++)
-                {
-                    hash = digest.HashData(ByteUtil.combine(new byte[][] { hash, publicKey }));
-                }
-
-                return getEncodedChunk(hash, 0) +
-                    getEncodedChunk(hash, 5) +
-                    getEncodedChunk(hash, 10) +
-                    getEncodedChunk(hash, 15) +
-                    getEncodedChunk(hash, 20) +
-                    getEncodedChunk(hash, 25);
-            }
-            catch (Exception e)
-            {
-                Debug.Assert(false, e.Message);
-                throw e;
-            }
+            return new Fingerprint(displayableFingerprint, scannableFingerprint);
         }
-
-        private String getEncodedChunk(byte[] hash, int offset)
-        {
-            long chunk = ByteUtil.byteArray5ToLong(hash, offset) % 100000;
-            return chunk.ToString().PadLeft(5, '0');
-        }
-
     }
 
 }

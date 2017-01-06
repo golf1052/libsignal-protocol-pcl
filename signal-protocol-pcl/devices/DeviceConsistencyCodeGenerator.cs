@@ -36,12 +36,19 @@ namespace libsignal.devices
                 sortedSignatures.Sort(new SignatureComparator());
 
                 IHashAlgorithmProvider messageDigest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
-                byte[] hash = messageDigest.HashData(ByteUtil.shortToByteArray(CODE_VERSION));
-                messageDigest.HashData(commitment.toByteArray());
+                byte[] hash = messageDigest.HashData(ByteUtil.combine(new byte[][]
+                {
+                    ByteUtil.shortToByteArray(CODE_VERSION),
+                    commitment.toByteArray()
+                }));
 
                 foreach (DeviceConsistencySignature signature in sortedSignatures)
                 {
-                    hash = messageDigest.HashData(signature.getVrfOutput());
+                    hash = messageDigest.HashData(ByteUtil.combine(new byte[][]
+                        {
+                            hash,
+                            signature.getVrfOutput()
+                        }));
                 }
 
                 string digits = getEncodedChunk(hash, 0) + getEncodedChunk(hash, 5);

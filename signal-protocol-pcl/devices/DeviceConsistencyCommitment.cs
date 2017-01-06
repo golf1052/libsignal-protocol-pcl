@@ -40,12 +40,19 @@ namespace libsignal.devices
                 sortedIdentityKeys.Sort(new IdentityKeyComparator());
 
                 IHashAlgorithmProvider messageDigest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
-                messageDigest.HashData(Encoding.UTF8.GetBytes(VERSION));
-                messageDigest.HashData(ByteUtil.intToByteArray(generation));
+                serialized = messageDigest.HashData(ByteUtil.combine(new byte[][]
+                    {
+                        Encoding.UTF8.GetBytes(VERSION),
+                        ByteUtil.intToByteArray(generation)
+                    }));
 
                 foreach (IdentityKey commitment in sortedIdentityKeys)
                 {
-                    this.serialized = messageDigest.HashData(commitment.getPublicKey().serialize());
+                    serialized = messageDigest.HashData(ByteUtil.combine(new byte[][]
+                        {
+                            serialized,
+                            commitment.getPublicKey().serialize()
+                        }));
                 }
 
                 this.generation = generation;
@@ -65,14 +72,6 @@ namespace libsignal.devices
         public int getGeneration()
         {
             return generation;
-        }
-    }
-
-    class IdentityKeyComparator : ByteArrayComparator, IComparer<IdentityKey>
-    {
-        public int Compare(IdentityKey first, IdentityKey second)
-        {
-            return compare(first.getPublicKey().serialize(), second.getPublicKey().serialize());
         }
     }
 }
