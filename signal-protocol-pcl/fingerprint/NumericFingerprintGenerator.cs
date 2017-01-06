@@ -23,12 +23,15 @@ using System.Diagnostics;
 using System.Text;
 using static PCLCrypto.WinRTCrypto;
 using System.Collections.Generic;
+using System.IO;
 
 namespace org.whispersystems.libsignal.fingerprint
 {
 
     public class NumericFingerprintGenerator : FingerprintGenerator
     {
+        private static readonly int FINGERPRINT_VERSION = 0;
+
         private readonly int iterations;
 
         /**
@@ -64,16 +67,10 @@ namespace org.whispersystems.libsignal.fingerprint
         public Fingerprint createFor(string localStableIdentifier, IdentityKey localIdentityKey,
                                string remoteStableIdentifier, IdentityKey remoteIdentityKey)
         {
-            DisplayableFingerprint displayableFingerprint = new DisplayableFingerprint(iterations,
-                localStableIdentifier,
-                localIdentityKey,
+            return createFor(localStableIdentifier,
+                new List<IdentityKey>(new[] { localIdentityKey }),
                 remoteStableIdentifier,
-                remoteIdentityKey);
-
-            ScannableFingerprint scannableFingerprint = new ScannableFingerprint(localStableIdentifier, localIdentityKey,
-                                                                                 remoteStableIdentifier, remoteIdentityKey);
-
-            return new Fingerprint(displayableFingerprint, scannableFingerprint);
+                new List<IdentityKey>(new[] { remoteIdentityKey }));
         }
 
         /**
@@ -92,16 +89,56 @@ namespace org.whispersystems.libsignal.fingerprint
         public Fingerprint createFor(string localStableIdentifier, List<IdentityKey> localIdentityKeys,
             string remoteStableIdentifier, List<IdentityKey> remoteIdentityKeys)
         {
-            DisplayableFingerprint displayableFingerprint = new DisplayableFingerprint(iterations,
-                localStableIdentifier,
-                localIdentityKeys,
-                remoteStableIdentifier,
-                remoteIdentityKeys);
+            byte[] localFingerprint = getFingerprint(iterations, localStableIdentifier, localIdentityKeys);
+            byte[] remoteFingerprint = getFingerprint(iterations, remoteStableIdentifier, remoteIdentityKeys);
 
-            ScannableFingerprint scannableFingerprint = new ScannableFingerprint(localStableIdentifier, localIdentityKeys,
-                remoteStableIdentifier, remoteIdentityKeys);
+            DisplayableFingerprint displayableFingerprint = new DisplayableFingerprint(localFingerprint, remoteFingerprint);
+
+            ScannableFingerprint scannableFingerprint = new ScannableFingerprint(localFingerprint, remoteFingerprint);
 
             return new Fingerprint(displayableFingerprint, scannableFingerprint);
+        }
+
+        private byte[] getFingerprint(int iterations, string stableIdentifier, List<IdentityKey> unsortedIdentityKeys)
+        {
+            try
+            {
+                IHashAlgorithmProvider digest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
+                byte[] publicKey = getLogicalKeyBytes(unsortedIdentityKeys);
+                byte[] hash = ByteUtil.combine(ByteUtil.shortToByteArray(FINGERPRINT_VERSION),
+                    publicKey, Encoding.UTF8.GetBytes(stableIdentifier));
+
+                for (int i = 0; i < iterations; i++)
+                {
+                    hash = digest.HashData(ByteUtil.combine(new byte[][]
+                    {
+                        hash, publicKey
+                    }));
+                }
+
+                return hash;
+            }
+            catch (Exception e)
+            {
+                Debug.Assert(false, e.Message);
+                throw e;
+            }
+        }
+
+        private byte[] getLogicalKeyBytes(List<IdentityKey> identityKeys)
+        {
+            List<IdentityKey> sortedIdentityKeys = new List<IdentityKey>(identityKeys);
+            sortedIdentityKeys.Sort(new IdentityKeyComparator());
+
+            MemoryStream baos = new MemoryStream();
+
+            foreach (IdentityKey identityKey in sortedIdentityKeys)
+            {
+                byte[] publicKeyBytes = identityKey.getPublicKey().serialize();
+                baos.Write(publicKeyBytes, 0, publicKeyBytes.Length);
+            }
+
+            return baos.ToArray();
         }
     }
 

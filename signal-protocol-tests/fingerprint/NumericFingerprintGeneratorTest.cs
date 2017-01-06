@@ -128,7 +128,6 @@ namespace org.whispersystems.libsignal.fingerprint
 
             try
             {
-                ;
                 aliceFingerprint.getScannableFingerprint().compareTo(bobFingerprint.getScannableFingerprint().getSerialized());
                 throw new Exception("Should mismatch!");
             }

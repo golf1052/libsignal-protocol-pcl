@@ -37,7 +37,6 @@
     <Compile Include="devices\DeviceConsistencyCodeGenerator.cs" />
     <Compile Include="devices\DeviceConsistencyCommitment.cs" />
     <Compile Include="devices\DeviceConsistencySignature.cs" />
-    <Compile Include="fingerprint\BaseFingerprintType.cs" />
     <Compile Include="protocol\DeviceConsistencyMessage.cs" />
     <Compile Include="protocol\SignalProtos.cs" />
     <Compile Include="SignalProtocolAddress.cs" />

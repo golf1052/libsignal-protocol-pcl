@@ -1,5 +1,5 @@
 /** 
- * Copyright (C) 2016 smndtrl, langboost
+ * Copyright (C) 2017 smndtrl, langboost, golf1052
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,23 @@ namespace org.whispersystems.libsignal.fingerprint
 {
     public class FingerprintVersionMismatchException : Exception
     {
-        public FingerprintVersionMismatchException() : base()
+        private readonly int theirVersion;
+        private readonly int ourVersion;
+
+        public FingerprintVersionMismatchException(int theirVersion, int ourVersion) : base()
         {
+            this.theirVersion = theirVersion;
+            this.ourVersion = ourVersion;
         }
 
-        public FingerprintVersionMismatchException(Exception e) : base("Fingerprint", e)
+        public int getTheirVersion()
         {
+            return theirVersion;
+        }
+
+        public int getOurVersion()
+        {
+            return ourVersion;
         }
     }
 }

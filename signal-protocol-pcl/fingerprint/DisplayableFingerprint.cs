@@ -26,78 +26,37 @@ using static PCLCrypto.WinRTCrypto;
 
 namespace org.whispersystems.libsignal.fingerprint
 {
-    public class DisplayableFingerprint : BaseFingerprintType
+    public class DisplayableFingerprint
     {
-        private static readonly int VERSION = 0;
+        private readonly string localFingerprintNumbers;
+        private readonly string remoteFingerprintNumbers;
 
-        private readonly string localFingerprint;
-        private readonly string remoteFingerprint;
-
-        internal DisplayableFingerprint(int iterations,
-            string localStableIdentifier, IdentityKey localIdentityKey,
-            string remoteStableIdentifier, IdentityKey remoteIdentityKey) :
-            this(iterations, localStableIdentifier,
-                new List<IdentityKey>(new[]
-                {
-                    localIdentityKey
-                }),
-                remoteStableIdentifier,
-                new List<IdentityKey>(new[]
-                {
-                    remoteIdentityKey
-                }))
+        internal DisplayableFingerprint(byte[] localFingerprint, byte[] remoteFingerprint)
         {
-        }
-
-        internal DisplayableFingerprint(int iterations,
-            string localStableIdentifier, List<IdentityKey> localIdentityKeys,
-            string remoteStableIdentifier, List<IdentityKey> remoteIdentityKeys)
-        {
-            this.localFingerprint = getDisplayStringFor(iterations, localStableIdentifier, localIdentityKeys);
-            this.remoteFingerprint = getDisplayStringFor(iterations, remoteStableIdentifier, remoteIdentityKeys);
+            this.localFingerprintNumbers = getDisplayStringFor(localFingerprint);
+            this.remoteFingerprintNumbers = getDisplayStringFor(remoteFingerprint);
         }
 
         public string getDisplayText()
         {
-            if (localFingerprint.CompareTo(remoteFingerprint) <= 0)
+            if (localFingerprintNumbers.CompareTo(remoteFingerprintNumbers) <= 0)
             {
-                return localFingerprint + remoteFingerprint;
+                return localFingerprintNumbers + remoteFingerprintNumbers;
             }
             else
             {
-                return remoteFingerprint + localFingerprint;
+                return remoteFingerprintNumbers + localFingerprintNumbers;
             }
         }
 
-        private string getDisplayStringFor(int iterations, string stableIdentifier, List<IdentityKey> unsortedIdentityKeys)
+        private string getDisplayStringFor(byte[] fingerprint)
         {
-            try
-            {
-                List<IdentityKey> sortedIdentityKeys = new List<IdentityKey>(unsortedIdentityKeys);
-                sortedIdentityKeys.Sort(new IdentityKeyComparator());
-
-                IHashAlgorithmProvider digest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
-                byte[] publicKey = getLogicalKeyBytes(sortedIdentityKeys);
-                byte[] hash = ByteUtil.combine(ByteUtil.shortToByteArray(VERSION),
-                    publicKey, Encoding.UTF8.GetBytes(stableIdentifier));
-
-                for (int i = 0; i < iterations; i++)
-                {
-                    hash = digest.HashData(ByteUtil.combine(new byte[][] { hash, publicKey }));
-                }
-
-                return getEncodedChunk(hash, 0) +
-                    getEncodedChunk(hash, 5) +
-                    getEncodedChunk(hash, 10) +
-                    getEncodedChunk(hash, 15) +
-                    getEncodedChunk(hash, 20) +
-                    getEncodedChunk(hash, 25);
-            }
-            catch (Exception e)
-            {
-                Debug.Assert(false, e.Message);
-                throw e;
-            }
+            return getEncodedChunk(fingerprint, 0) +
+                getEncodedChunk(fingerprint, 5) +
+                getEncodedChunk(fingerprint, 10) +
+                getEncodedChunk(fingerprint, 15) +
+                getEncodedChunk(fingerprint, 20) +
+                getEncodedChunk(fingerprint, 25);
         }
 
         private string getEncodedChunk(byte[] hash, int offset)

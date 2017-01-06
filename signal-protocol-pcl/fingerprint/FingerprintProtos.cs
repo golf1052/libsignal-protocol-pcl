@@ -16,10 +16,10 @@ namespace libsignal.fingerprint {
     }
     #endregion
     #region Static variables
-    private static pbd::MessageDescriptor internal__static_FingerprintData__Descriptor;
-    private static pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.FingerprintData, global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Builder> internal__static_FingerprintData__FieldAccessorTable;
-    private static pbd::MessageDescriptor internal__static_CombinedFingerprint__Descriptor;
-    private static pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint, global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint.Builder> internal__static_CombinedFingerprint__FieldAccessorTable;
+    private static pbd::MessageDescriptor internal__static_LogicalFingerprint__Descriptor;
+    private static pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint, global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Builder> internal__static_LogicalFingerprint__FieldAccessorTable;
+    private static pbd::MessageDescriptor internal__static_CombinedFingerprints__Descriptor;
+    private static pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints, global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints.Builder> internal__static_CombinedFingerprints__FieldAccessorTable;
     #endregion
     #region Descriptor
     public static pbd::FileDescriptor Descriptor {
@@ -30,20 +30,20 @@ namespace libsignal.fingerprint {
     static FingerprintProtos() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChlGaW5nZXJwcmludFByb3RvY29sLnByb3RvIjgKD0ZpbmdlcnByaW50RGF0", 
-            "YRIRCglwdWJsaWNLZXkYASABKAwSEgoKaWRlbnRpZmllchgCIAEoDCJ/ChND", 
-            "b21iaW5lZEZpbmdlcnByaW50Eg8KB3ZlcnNpb24YASABKA0SKgoQbG9jYWxG", 
-            "aW5nZXJwcmludBgCIAEoCzIQLkZpbmdlcnByaW50RGF0YRIrChFyZW1vdGVG", 
-          "aW5nZXJwcmludBgDIAEoCzIQLkZpbmdlcnByaW50RGF0YQ=="));
+            "ChlGaW5nZXJwcmludFByb3RvY29sLnByb3RvIiUKEkxvZ2ljYWxGaW5nZXJw", 
+            "cmludBIPCgdjb250ZW50GAEgASgMIoYBChRDb21iaW5lZEZpbmdlcnByaW50", 
+            "cxIPCgd2ZXJzaW9uGAEgASgNEi0KEGxvY2FsRmluZ2VycHJpbnQYAiABKAsy", 
+            "Ey5Mb2dpY2FsRmluZ2VycHJpbnQSLgoRcmVtb3RlRmluZ2VycHJpbnQYAyAB", 
+          "KAsyEy5Mb2dpY2FsRmluZ2VycHJpbnQ="));
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
-        internal__static_FingerprintData__Descriptor = Descriptor.MessageTypes[0];
-        internal__static_FingerprintData__FieldAccessorTable = 
-            new pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.FingerprintData, global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Builder>(internal__static_FingerprintData__Descriptor,
-                new string[] { "PublicKey", "Identifier", });
-        internal__static_CombinedFingerprint__Descriptor = Descriptor.MessageTypes[1];
-        internal__static_CombinedFingerprint__FieldAccessorTable = 
-            new pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint, global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint.Builder>(internal__static_CombinedFingerprint__Descriptor,
+        internal__static_LogicalFingerprint__Descriptor = Descriptor.MessageTypes[0];
+        internal__static_LogicalFingerprint__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint, global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Builder>(internal__static_LogicalFingerprint__Descriptor,
+                new string[] { "Content", });
+        internal__static_CombinedFingerprints__Descriptor = Descriptor.MessageTypes[1];
+        internal__static_CombinedFingerprints__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints, global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints.Builder>(internal__static_CombinedFingerprints__Descriptor,
                 new string[] { "Version", "LocalFingerprint", "RemoteFingerprint", });
         return null;
       };
@@ -55,49 +55,39 @@ namespace libsignal.fingerprint {
     
     #region Messages
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class FingerprintData : pb::GeneratedMessage<FingerprintData, FingerprintData.Builder> {
-      private FingerprintData() { }
-      private static readonly FingerprintData defaultInstance = new FingerprintData().MakeReadOnly();
-      private static readonly string[] _fingerprintDataFieldNames = new string[] { "identifier", "publicKey" };
-      private static readonly uint[] _fingerprintDataFieldTags = new uint[] { 18, 10 };
-      public static FingerprintData DefaultInstance {
+    public sealed partial class LogicalFingerprint : pb::GeneratedMessage<LogicalFingerprint, LogicalFingerprint.Builder> {
+      private LogicalFingerprint() { }
+      private static readonly LogicalFingerprint defaultInstance = new LogicalFingerprint().MakeReadOnly();
+      private static readonly string[] _logicalFingerprintFieldNames = new string[] { "content" };
+      private static readonly uint[] _logicalFingerprintFieldTags = new uint[] { 10 };
+      public static LogicalFingerprint DefaultInstance {
         get { return defaultInstance; }
       }
       
-      public override FingerprintData DefaultInstanceForType {
+      public override LogicalFingerprint DefaultInstanceForType {
         get { return DefaultInstance; }
       }
       
-      protected override FingerprintData ThisMessage {
+      protected override LogicalFingerprint ThisMessage {
         get { return this; }
       }
       
       public static pbd::MessageDescriptor Descriptor {
-        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_FingerprintData__Descriptor; }
+        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_LogicalFingerprint__Descriptor; }
       }
       
-      protected override pb::FieldAccess.FieldAccessorTable<FingerprintData, FingerprintData.Builder> InternalFieldAccessors {
-        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_FingerprintData__FieldAccessorTable; }
+      protected override pb::FieldAccess.FieldAccessorTable<LogicalFingerprint, LogicalFingerprint.Builder> InternalFieldAccessors {
+        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_LogicalFingerprint__FieldAccessorTable; }
       }
       
-      public const int PublicKeyFieldNumber = 1;
-      private bool hasPublicKey;
-      private pb::ByteString publicKey_ = pb::ByteString.Empty;
-      public bool HasPublicKey {
-        get { return hasPublicKey; }
+      public const int ContentFieldNumber = 1;
+      private bool hasContent;
+      private pb::ByteString content_ = pb::ByteString.Empty;
+      public bool HasContent {
+        get { return hasContent; }
       }
-      public pb::ByteString PublicKey {
-        get { return publicKey_; }
-      }
-      
-      public const int IdentifierFieldNumber = 2;
-      private bool hasIdentifier;
-      private pb::ByteString identifier_ = pb::ByteString.Empty;
-      public bool HasIdentifier {
-        get { return hasIdentifier; }
-      }
-      public pb::ByteString Identifier {
-        get { return identifier_; }
+      public pb::ByteString Content {
+        get { return content_; }
       }
       
       public override bool IsInitialized {
@@ -108,12 +98,9 @@ namespace libsignal.fingerprint {
       
       public override void WriteTo(pb::ICodedOutputStream output) {
         CalcSerializedSize();
-        string[] field_names = _fingerprintDataFieldNames;
-        if (hasPublicKey) {
-          output.WriteBytes(1, field_names[1], PublicKey);
-        }
-        if (hasIdentifier) {
-          output.WriteBytes(2, field_names[0], Identifier);
+        string[] field_names = _logicalFingerprintFieldNames;
+        if (hasContent) {
+          output.WriteBytes(1, field_names[0], Content);
         }
         UnknownFields.WriteTo(output);
       }
@@ -132,59 +119,56 @@ namespace libsignal.fingerprint {
         if (size != -1) return size;
         
         size = 0;
-        if (hasPublicKey) {
-          size += pb::CodedOutputStream.ComputeBytesSize(1, PublicKey);
-        }
-        if (hasIdentifier) {
-          size += pb::CodedOutputStream.ComputeBytesSize(2, Identifier);
+        if (hasContent) {
+          size += pb::CodedOutputStream.ComputeBytesSize(1, Content);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
         return size;
       }
-      public static FingerprintData ParseFrom(pb::ByteString data) {
+      public static LogicalFingerprint ParseFrom(pb::ByteString data) {
         return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
       }
-      public static FingerprintData ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      public static LogicalFingerprint ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
       }
-      public static FingerprintData ParseFrom(byte[] data) {
+      public static LogicalFingerprint ParseFrom(byte[] data) {
         return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
       }
-      public static FingerprintData ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      public static LogicalFingerprint ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
       }
-      public static FingerprintData ParseFrom(global::System.IO.Stream input) {
+      public static LogicalFingerprint ParseFrom(global::System.IO.Stream input) {
         return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
       }
-      public static FingerprintData ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      public static LogicalFingerprint ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
       }
-      public static FingerprintData ParseDelimitedFrom(global::System.IO.Stream input) {
+      public static LogicalFingerprint ParseDelimitedFrom(global::System.IO.Stream input) {
         return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
       }
-      public static FingerprintData ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      public static LogicalFingerprint ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
         return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
       }
-      public static FingerprintData ParseFrom(pb::ICodedInputStream input) {
+      public static LogicalFingerprint ParseFrom(pb::ICodedInputStream input) {
         return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
       }
-      public static FingerprintData ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      public static LogicalFingerprint ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
       }
-      private FingerprintData MakeReadOnly() {
+      private LogicalFingerprint MakeReadOnly() {
         return this;
       }
       
       public static Builder CreateBuilder() { return new Builder(); }
       public override Builder ToBuilder() { return CreateBuilder(this); }
       public override Builder CreateBuilderForType() { return new Builder(); }
-      public static Builder CreateBuilder(FingerprintData prototype) {
+      public static Builder CreateBuilder(LogicalFingerprint prototype) {
         return new Builder(prototype);
       }
       
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-      public sealed partial class Builder : pb::GeneratedBuilder<FingerprintData, Builder> {
+      public sealed partial class Builder : pb::GeneratedBuilder<LogicalFingerprint, Builder> {
         protected override Builder ThisBuilder {
           get { return this; }
         }
@@ -192,18 +176,18 @@ namespace libsignal.fingerprint {
           result = DefaultInstance;
           resultIsReadOnly = true;
         }
-        internal Builder(FingerprintData cloneFrom) {
+        internal Builder(LogicalFingerprint cloneFrom) {
           result = cloneFrom;
           resultIsReadOnly = true;
         }
         
         private bool resultIsReadOnly;
-        private FingerprintData result;
+        private LogicalFingerprint result;
         
-        private FingerprintData PrepareBuilder() {
+        private LogicalFingerprint PrepareBuilder() {
           if (resultIsReadOnly) {
-            FingerprintData original = result;
-            result = new FingerprintData();
+            LogicalFingerprint original = result;
+            result = new LogicalFingerprint();
             resultIsReadOnly = false;
             MergeFrom(original);
           }
@@ -214,7 +198,7 @@ namespace libsignal.fingerprint {
           get { return result.IsInitialized; }
         }
         
-        protected override FingerprintData MessageBeingBuilt {
+        protected override LogicalFingerprint MessageBeingBuilt {
           get { return PrepareBuilder(); }
         }
         
@@ -233,14 +217,14 @@ namespace libsignal.fingerprint {
         }
         
         public override pbd::MessageDescriptor DescriptorForType {
-          get { return global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Descriptor; }
+          get { return global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Descriptor; }
         }
         
-        public override FingerprintData DefaultInstanceForType {
-          get { return global::libsignal.fingerprint.FingerprintProtos.FingerprintData.DefaultInstance; }
+        public override LogicalFingerprint DefaultInstanceForType {
+          get { return global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.DefaultInstance; }
         }
         
-        public override FingerprintData BuildPartial() {
+        public override LogicalFingerprint BuildPartial() {
           if (resultIsReadOnly) {
             return result;
           }
@@ -249,22 +233,19 @@ namespace libsignal.fingerprint {
         }
         
         public override Builder MergeFrom(pb::IMessage other) {
-          if (other is FingerprintData) {
-            return MergeFrom((FingerprintData) other);
+          if (other is LogicalFingerprint) {
+            return MergeFrom((LogicalFingerprint) other);
           } else {
             base.MergeFrom(other);
             return this;
           }
         }
         
-        public override Builder MergeFrom(FingerprintData other) {
-          if (other == global::libsignal.fingerprint.FingerprintProtos.FingerprintData.DefaultInstance) return this;
+        public override Builder MergeFrom(LogicalFingerprint other) {
+          if (other == global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.DefaultInstance) return this;
           PrepareBuilder();
-          if (other.HasPublicKey) {
-            PublicKey = other.PublicKey;
-          }
-          if (other.HasIdentifier) {
-            Identifier = other.Identifier;
+          if (other.HasContent) {
+            Content = other.Content;
           }
           this.MergeUnknownFields(other.UnknownFields);
           return this;
@@ -281,9 +262,9 @@ namespace libsignal.fingerprint {
           string field_name;
           while (input.ReadTag(out tag, out field_name)) {
             if(tag == 0 && field_name != null) {
-              int field_ordinal = global::System.Array.BinarySearch(_fingerprintDataFieldNames, field_name, global::System.StringComparer.Ordinal);
+              int field_ordinal = global::System.Array.BinarySearch(_logicalFingerprintFieldNames, field_name, global::System.StringComparer.Ordinal);
               if(field_ordinal >= 0)
-                tag = _fingerprintDataFieldTags[field_ordinal];
+                tag = _logicalFingerprintFieldTags[field_ordinal];
               else {
                 if (unknownFields == null) {
                   unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -310,11 +291,7 @@ namespace libsignal.fingerprint {
                 break;
               }
               case 10: {
-                result.hasPublicKey = input.ReadBytes(ref result.publicKey_);
-                break;
-              }
-              case 18: {
-                result.hasIdentifier = input.ReadBytes(ref result.identifier_);
+                result.hasContent = input.ReadBytes(ref result.content_);
                 break;
               }
             }
@@ -327,77 +304,56 @@ namespace libsignal.fingerprint {
         }
         
         
-        public bool HasPublicKey {
-          get { return result.hasPublicKey; }
+        public bool HasContent {
+          get { return result.hasContent; }
         }
-        public pb::ByteString PublicKey {
-          get { return result.PublicKey; }
-          set { SetPublicKey(value); }
+        public pb::ByteString Content {
+          get { return result.Content; }
+          set { SetContent(value); }
         }
-        public Builder SetPublicKey(pb::ByteString value) {
+        public Builder SetContent(pb::ByteString value) {
           pb::ThrowHelper.ThrowIfNull(value, "value");
           PrepareBuilder();
-          result.hasPublicKey = true;
-          result.publicKey_ = value;
+          result.hasContent = true;
+          result.content_ = value;
           return this;
         }
-        public Builder ClearPublicKey() {
+        public Builder ClearContent() {
           PrepareBuilder();
-          result.hasPublicKey = false;
-          result.publicKey_ = pb::ByteString.Empty;
-          return this;
-        }
-        
-        public bool HasIdentifier {
-          get { return result.hasIdentifier; }
-        }
-        public pb::ByteString Identifier {
-          get { return result.Identifier; }
-          set { SetIdentifier(value); }
-        }
-        public Builder SetIdentifier(pb::ByteString value) {
-          pb::ThrowHelper.ThrowIfNull(value, "value");
-          PrepareBuilder();
-          result.hasIdentifier = true;
-          result.identifier_ = value;
-          return this;
-        }
-        public Builder ClearIdentifier() {
-          PrepareBuilder();
-          result.hasIdentifier = false;
-          result.identifier_ = pb::ByteString.Empty;
+          result.hasContent = false;
+          result.content_ = pb::ByteString.Empty;
           return this;
         }
       }
-      static FingerprintData() {
+      static LogicalFingerprint() {
         object.ReferenceEquals(global::libsignal.fingerprint.FingerprintProtos.Descriptor, null);
       }
     }
     
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class CombinedFingerprint : pb::GeneratedMessage<CombinedFingerprint, CombinedFingerprint.Builder> {
-      private CombinedFingerprint() { }
-      private static readonly CombinedFingerprint defaultInstance = new CombinedFingerprint().MakeReadOnly();
-      private static readonly string[] _combinedFingerprintFieldNames = new string[] { "localFingerprint", "remoteFingerprint", "version" };
-      private static readonly uint[] _combinedFingerprintFieldTags = new uint[] { 18, 26, 8 };
-      public static CombinedFingerprint DefaultInstance {
+    public sealed partial class CombinedFingerprints : pb::GeneratedMessage<CombinedFingerprints, CombinedFingerprints.Builder> {
+      private CombinedFingerprints() { }
+      private static readonly CombinedFingerprints defaultInstance = new CombinedFingerprints().MakeReadOnly();
+      private static readonly string[] _combinedFingerprintsFieldNames = new string[] { "localFingerprint", "remoteFingerprint", "version" };
+      private static readonly uint[] _combinedFingerprintsFieldTags = new uint[] { 18, 26, 8 };
+      public static CombinedFingerprints DefaultInstance {
         get { return defaultInstance; }
       }
       
-      public override CombinedFingerprint DefaultInstanceForType {
+      public override CombinedFingerprints DefaultInstanceForType {
         get { return DefaultInstance; }
       }
       
-      protected override CombinedFingerprint ThisMessage {
+      protected override CombinedFingerprints ThisMessage {
         get { return this; }
       }
       
       public static pbd::MessageDescriptor Descriptor {
-        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_CombinedFingerprint__Descriptor; }
+        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_CombinedFingerprints__Descriptor; }
       }
       
-      protected override pb::FieldAccess.FieldAccessorTable<CombinedFingerprint, CombinedFingerprint.Builder> InternalFieldAccessors {
-        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_CombinedFingerprint__FieldAccessorTable; }
+      protected override pb::FieldAccess.FieldAccessorTable<CombinedFingerprints, CombinedFingerprints.Builder> InternalFieldAccessors {
+        get { return global::libsignal.fingerprint.FingerprintProtos.internal__static_CombinedFingerprints__FieldAccessorTable; }
       }
       
       public const int VersionFieldNumber = 1;
@@ -413,22 +369,22 @@ namespace libsignal.fingerprint {
       
       public const int LocalFingerprintFieldNumber = 2;
       private bool hasLocalFingerprint;
-      private global::libsignal.fingerprint.FingerprintProtos.FingerprintData localFingerprint_;
+      private global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint localFingerprint_;
       public bool HasLocalFingerprint {
         get { return hasLocalFingerprint; }
       }
-      public global::libsignal.fingerprint.FingerprintProtos.FingerprintData LocalFingerprint {
-        get { return localFingerprint_ ?? global::libsignal.fingerprint.FingerprintProtos.FingerprintData.DefaultInstance; }
+      public global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint LocalFingerprint {
+        get { return localFingerprint_ ?? global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.DefaultInstance; }
       }
       
       public const int RemoteFingerprintFieldNumber = 3;
       private bool hasRemoteFingerprint;
-      private global::libsignal.fingerprint.FingerprintProtos.FingerprintData remoteFingerprint_;
+      private global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint remoteFingerprint_;
       public bool HasRemoteFingerprint {
         get { return hasRemoteFingerprint; }
       }
-      public global::libsignal.fingerprint.FingerprintProtos.FingerprintData RemoteFingerprint {
-        get { return remoteFingerprint_ ?? global::libsignal.fingerprint.FingerprintProtos.FingerprintData.DefaultInstance; }
+      public global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint RemoteFingerprint {
+        get { return remoteFingerprint_ ?? global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.DefaultInstance; }
       }
       
       public override bool IsInitialized {
@@ -439,7 +395,7 @@ namespace libsignal.fingerprint {
       
       public override void WriteTo(pb::ICodedOutputStream output) {
         CalcSerializedSize();
-        string[] field_names = _combinedFingerprintFieldNames;
+        string[] field_names = _combinedFingerprintsFieldNames;
         if (hasVersion) {
           output.WriteUInt32(1, field_names[2], Version);
         }
@@ -479,49 +435,49 @@ namespace libsignal.fingerprint {
         memoizedSerializedSize = size;
         return size;
       }
-      public static CombinedFingerprint ParseFrom(pb::ByteString data) {
+      public static CombinedFingerprints ParseFrom(pb::ByteString data) {
         return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      public static CombinedFingerprints ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(byte[] data) {
+      public static CombinedFingerprints ParseFrom(byte[] data) {
         return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      public static CombinedFingerprints ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(global::System.IO.Stream input) {
+      public static CombinedFingerprints ParseFrom(global::System.IO.Stream input) {
         return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      public static CombinedFingerprints ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
       }
-      public static CombinedFingerprint ParseDelimitedFrom(global::System.IO.Stream input) {
+      public static CombinedFingerprints ParseDelimitedFrom(global::System.IO.Stream input) {
         return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
       }
-      public static CombinedFingerprint ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      public static CombinedFingerprints ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
         return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(pb::ICodedInputStream input) {
+      public static CombinedFingerprints ParseFrom(pb::ICodedInputStream input) {
         return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
       }
-      public static CombinedFingerprint ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      public static CombinedFingerprints ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
         return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
       }
-      private CombinedFingerprint MakeReadOnly() {
+      private CombinedFingerprints MakeReadOnly() {
         return this;
       }
       
       public static Builder CreateBuilder() { return new Builder(); }
       public override Builder ToBuilder() { return CreateBuilder(this); }
       public override Builder CreateBuilderForType() { return new Builder(); }
-      public static Builder CreateBuilder(CombinedFingerprint prototype) {
+      public static Builder CreateBuilder(CombinedFingerprints prototype) {
         return new Builder(prototype);
       }
       
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-      public sealed partial class Builder : pb::GeneratedBuilder<CombinedFingerprint, Builder> {
+      public sealed partial class Builder : pb::GeneratedBuilder<CombinedFingerprints, Builder> {
         protected override Builder ThisBuilder {
           get { return this; }
         }
@@ -529,18 +485,18 @@ namespace libsignal.fingerprint {
           result = DefaultInstance;
           resultIsReadOnly = true;
         }
-        internal Builder(CombinedFingerprint cloneFrom) {
+        internal Builder(CombinedFingerprints cloneFrom) {
           result = cloneFrom;
           resultIsReadOnly = true;
         }
         
         private bool resultIsReadOnly;
-        private CombinedFingerprint result;
+        private CombinedFingerprints result;
         
-        private CombinedFingerprint PrepareBuilder() {
+        private CombinedFingerprints PrepareBuilder() {
           if (resultIsReadOnly) {
-            CombinedFingerprint original = result;
-            result = new CombinedFingerprint();
+            CombinedFingerprints original = result;
+            result = new CombinedFingerprints();
             resultIsReadOnly = false;
             MergeFrom(original);
           }
@@ -551,7 +507,7 @@ namespace libsignal.fingerprint {
           get { return result.IsInitialized; }
         }
         
-        protected override CombinedFingerprint MessageBeingBuilt {
+        protected override CombinedFingerprints MessageBeingBuilt {
           get { return PrepareBuilder(); }
         }
         
@@ -570,14 +526,14 @@ namespace libsignal.fingerprint {
         }
         
         public override pbd::MessageDescriptor DescriptorForType {
-          get { return global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint.Descriptor; }
+          get { return global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints.Descriptor; }
         }
         
-        public override CombinedFingerprint DefaultInstanceForType {
-          get { return global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint.DefaultInstance; }
+        public override CombinedFingerprints DefaultInstanceForType {
+          get { return global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints.DefaultInstance; }
         }
         
-        public override CombinedFingerprint BuildPartial() {
+        public override CombinedFingerprints BuildPartial() {
           if (resultIsReadOnly) {
             return result;
           }
@@ -586,16 +542,16 @@ namespace libsignal.fingerprint {
         }
         
         public override Builder MergeFrom(pb::IMessage other) {
-          if (other is CombinedFingerprint) {
-            return MergeFrom((CombinedFingerprint) other);
+          if (other is CombinedFingerprints) {
+            return MergeFrom((CombinedFingerprints) other);
           } else {
             base.MergeFrom(other);
             return this;
           }
         }
         
-        public override Builder MergeFrom(CombinedFingerprint other) {
-          if (other == global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprint.DefaultInstance) return this;
+        public override Builder MergeFrom(CombinedFingerprints other) {
+          if (other == global::libsignal.fingerprint.FingerprintProtos.CombinedFingerprints.DefaultInstance) return this;
           PrepareBuilder();
           if (other.HasVersion) {
             Version = other.Version;
@@ -621,9 +577,9 @@ namespace libsignal.fingerprint {
           string field_name;
           while (input.ReadTag(out tag, out field_name)) {
             if(tag == 0 && field_name != null) {
-              int field_ordinal = global::System.Array.BinarySearch(_combinedFingerprintFieldNames, field_name, global::System.StringComparer.Ordinal);
+              int field_ordinal = global::System.Array.BinarySearch(_combinedFingerprintsFieldNames, field_name, global::System.StringComparer.Ordinal);
               if(field_ordinal >= 0)
-                tag = _combinedFingerprintFieldTags[field_ordinal];
+                tag = _combinedFingerprintsFieldTags[field_ordinal];
               else {
                 if (unknownFields == null) {
                   unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -654,7 +610,7 @@ namespace libsignal.fingerprint {
                 break;
               }
               case 18: {
-                global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Builder subBuilder = global::libsignal.fingerprint.FingerprintProtos.FingerprintData.CreateBuilder();
+                global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Builder subBuilder = global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.CreateBuilder();
                 if (result.hasLocalFingerprint) {
                   subBuilder.MergeFrom(LocalFingerprint);
                 }
@@ -663,7 +619,7 @@ namespace libsignal.fingerprint {
                 break;
               }
               case 26: {
-                global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Builder subBuilder = global::libsignal.fingerprint.FingerprintProtos.FingerprintData.CreateBuilder();
+                global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Builder subBuilder = global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.CreateBuilder();
                 if (result.hasRemoteFingerprint) {
                   subBuilder.MergeFrom(RemoteFingerprint);
                 }
@@ -706,30 +662,30 @@ namespace libsignal.fingerprint {
         public bool HasLocalFingerprint {
          get { return result.hasLocalFingerprint; }
         }
-        public global::libsignal.fingerprint.FingerprintProtos.FingerprintData LocalFingerprint {
+        public global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint LocalFingerprint {
           get { return result.LocalFingerprint; }
           set { SetLocalFingerprint(value); }
         }
-        public Builder SetLocalFingerprint(global::libsignal.fingerprint.FingerprintProtos.FingerprintData value) {
+        public Builder SetLocalFingerprint(global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint value) {
           pb::ThrowHelper.ThrowIfNull(value, "value");
           PrepareBuilder();
           result.hasLocalFingerprint = true;
           result.localFingerprint_ = value;
           return this;
         }
-        public Builder SetLocalFingerprint(global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Builder builderForValue) {
+        public Builder SetLocalFingerprint(global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Builder builderForValue) {
           pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
           PrepareBuilder();
           result.hasLocalFingerprint = true;
           result.localFingerprint_ = builderForValue.Build();
           return this;
         }
-        public Builder MergeLocalFingerprint(global::libsignal.fingerprint.FingerprintProtos.FingerprintData value) {
+        public Builder MergeLocalFingerprint(global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint value) {
           pb::ThrowHelper.ThrowIfNull(value, "value");
           PrepareBuilder();
           if (result.hasLocalFingerprint &&
-              result.localFingerprint_ != global::libsignal.fingerprint.FingerprintProtos.FingerprintData.DefaultInstance) {
-              result.localFingerprint_ = global::libsignal.fingerprint.FingerprintProtos.FingerprintData.CreateBuilder(result.localFingerprint_).MergeFrom(value).BuildPartial();
+              result.localFingerprint_ != global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.DefaultInstance) {
+              result.localFingerprint_ = global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.CreateBuilder(result.localFingerprint_).MergeFrom(value).BuildPartial();
           } else {
             result.localFingerprint_ = value;
           }
@@ -746,30 +702,30 @@ namespace libsignal.fingerprint {
         public bool HasRemoteFingerprint {
          get { return result.hasRemoteFingerprint; }
         }
-        public global::libsignal.fingerprint.FingerprintProtos.FingerprintData RemoteFingerprint {
+        public global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint RemoteFingerprint {
           get { return result.RemoteFingerprint; }
           set { SetRemoteFingerprint(value); }
         }
-        public Builder SetRemoteFingerprint(global::libsignal.fingerprint.FingerprintProtos.FingerprintData value) {
+        public Builder SetRemoteFingerprint(global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint value) {
           pb::ThrowHelper.ThrowIfNull(value, "value");
           PrepareBuilder();
           result.hasRemoteFingerprint = true;
           result.remoteFingerprint_ = value;
           return this;
         }
-        public Builder SetRemoteFingerprint(global::libsignal.fingerprint.FingerprintProtos.FingerprintData.Builder builderForValue) {
+        public Builder SetRemoteFingerprint(global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.Builder builderForValue) {
           pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
           PrepareBuilder();
           result.hasRemoteFingerprint = true;
           result.remoteFingerprint_ = builderForValue.Build();
           return this;
         }
-        public Builder MergeRemoteFingerprint(global::libsignal.fingerprint.FingerprintProtos.FingerprintData value) {
+        public Builder MergeRemoteFingerprint(global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint value) {
           pb::ThrowHelper.ThrowIfNull(value, "value");
           PrepareBuilder();
           if (result.hasRemoteFingerprint &&
-              result.remoteFingerprint_ != global::libsignal.fingerprint.FingerprintProtos.FingerprintData.DefaultInstance) {
-              result.remoteFingerprint_ = global::libsignal.fingerprint.FingerprintProtos.FingerprintData.CreateBuilder(result.remoteFingerprint_).MergeFrom(value).BuildPartial();
+              result.remoteFingerprint_ != global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.DefaultInstance) {
+              result.remoteFingerprint_ = global::libsignal.fingerprint.FingerprintProtos.LogicalFingerprint.CreateBuilder(result.remoteFingerprint_).MergeFrom(value).BuildPartial();
           } else {
             result.remoteFingerprint_ = value;
           }
@@ -783,7 +739,7 @@ namespace libsignal.fingerprint {
           return this;
         }
       }
-      static CombinedFingerprint() {
+      static CombinedFingerprints() {
         object.ReferenceEquals(global::libsignal.fingerprint.FingerprintProtos.Descriptor, null);
       }
     }

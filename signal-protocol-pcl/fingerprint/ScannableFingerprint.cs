@@ -29,37 +29,27 @@ using System.Diagnostics;
 namespace org.whispersystems.libsignal.fingerprint
 {
 
-    public class ScannableFingerprint : BaseFingerprintType
+    public class ScannableFingerprint
     {
         private static readonly int VERSION = 0;
 
-        private readonly CombinedFingerprint combinedFingerprint;
+        private readonly CombinedFingerprints fingerprints;
 
-        internal ScannableFingerprint(string localStableIdentifier, IdentityKey localIdentityKey,
-            string remoteStableIdentifier, IdentityKey remoteIdentityKey)
+        internal ScannableFingerprint(byte[] localFingerprintData, byte[] remoteFingerprintData)
         {
-            this.combinedFingerprint = initializeCombinedFingerprint(localStableIdentifier, localIdentityKey.serialize(),
-                remoteStableIdentifier, remoteIdentityKey.serialize());
-        }
+            LogicalFingerprint localFingerprint = LogicalFingerprint.CreateBuilder()
+                .SetContent(ByteString.CopyFrom(ByteUtil.trim(localFingerprintData, 32)))
+                .Build();
 
-        internal ScannableFingerprint(string localStableIdentifier, List<IdentityKey> localIdentityKeys,
-            string remoteStableIdentifier, List<IdentityKey> remoteIdentityKeys)
-        {
-            try
-            {
-                IHashAlgorithmProvider messageDigest = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha512);
+            LogicalFingerprint remoteFingerprint = LogicalFingerprint.CreateBuilder()
+                .SetContent(ByteString.CopyFrom(ByteUtil.trim(remoteFingerprintData, 32)))
+                .Build();
 
-                byte[] localIdentityLogicalKey = messageDigest.HashData(getLogicalKeyBytes(localIdentityKeys));
-                byte[] remoteIdentityLogicalKey = messageDigest.HashData(getLogicalKeyBytes(remoteIdentityKeys));
-
-                this.combinedFingerprint = initializeCombinedFingerprint(localStableIdentifier, localIdentityLogicalKey,
-                    remoteStableIdentifier, remoteIdentityLogicalKey);
-            }
-            catch (Exception e)
-            {
-                Debug.Assert(false, e.Message);
-                throw e;
-            }
+            this.fingerprints = CombinedFingerprints.CreateBuilder()
+                .SetVersion((uint)VERSION)
+                .SetLocalFingerprint(localFingerprint)
+                .SetRemoteFingerprint(remoteFingerprint)
+                .Build();
         }
 
         /**
@@ -67,7 +57,7 @@ namespace org.whispersystems.libsignal.fingerprint
          */
         public byte[] getSerialized()
         {
-            return combinedFingerprint.ToByteArray();
+            return fingerprints.ToByteArray();
         }
 
         /**
@@ -85,44 +75,21 @@ namespace org.whispersystems.libsignal.fingerprint
         {
             try
             {
-                CombinedFingerprint scannedFingerprint = CombinedFingerprint.ParseFrom(scannedFingerprintData);
+                CombinedFingerprints scanned = CombinedFingerprints.ParseFrom(scannedFingerprintData);
 
-                if (!scannedFingerprint.HasRemoteFingerprint || !scannedFingerprint.HasLocalFingerprint ||
-                    !scannedFingerprint.HasVersion || scannedFingerprint.Version != combinedFingerprint.Version)
+                if (!scanned.HasRemoteFingerprint || !scanned.HasLocalFingerprint ||
+                    !scanned.HasVersion || scanned.Version != fingerprints.Version)
                 {
-                    throw new FingerprintVersionMismatchException();
+                    throw new FingerprintVersionMismatchException((int)scanned.Version, VERSION);
                 }
 
-                if (!combinedFingerprint.LocalFingerprint.Identifier.Equals(scannedFingerprint.RemoteFingerprint.Identifier) ||
-                    !combinedFingerprint.RemoteFingerprint.Identifier.Equals(scannedFingerprint.LocalFingerprint.Identifier))
-                {
-                    throw new FingerprintIdentifierMismatchException(combinedFingerprint.LocalFingerprint.Identifier.ToStringUtf8(),
-                                                                     combinedFingerprint.RemoteFingerprint.Identifier.ToStringUtf8(),
-                                                                     scannedFingerprint.LocalFingerprint.Identifier.ToStringUtf8(),
-                                                                     scannedFingerprint.RemoteFingerprint.Identifier.ToStringUtf8());
-                }
-
-                return ByteUtil.isEqual(combinedFingerprint.LocalFingerprint.ToByteArray(), scannedFingerprint.RemoteFingerprint.ToByteArray()) &&
-                       ByteUtil.isEqual(combinedFingerprint.RemoteFingerprint.ToByteArray(), scannedFingerprint.LocalFingerprint.ToByteArray());
+                return ByteUtil.isEqual(fingerprints.LocalFingerprint.Content.ToByteArray(), scanned.RemoteFingerprint.Content.ToByteArray()) &&
+                       ByteUtil.isEqual(fingerprints.RemoteFingerprint.Content.ToByteArray(), scanned.LocalFingerprint.Content.ToByteArray());
             }
             catch (InvalidProtocolBufferException e)
             {
                 throw new FingerprintParsingException(e);
             }
-        }
-
-        private CombinedFingerprint initializeCombinedFingerprint(string localStableIdentifier, byte[] localIdentityKeyBytes,
-            string remoteStableIdentifier, byte[] remoteIdentityKeyBytes)
-        {
-            return CombinedFingerprint.CreateBuilder()
-                .SetVersion((uint)VERSION)
-                .SetLocalFingerprint(FingerprintData.CreateBuilder()
-                    .SetIdentifier(ByteString.CopyFrom(Encoding.UTF8.GetBytes(localStableIdentifier)))
-                    .SetPublicKey(ByteString.CopyFrom(localIdentityKeyBytes)))
-                .SetRemoteFingerprint(FingerprintData.CreateBuilder()
-                    .SetIdentifier(ByteString.CopyFrom(Encoding.UTF8.GetBytes(remoteStableIdentifier)))
-                    .SetPublicKey(ByteString.CopyFrom(remoteIdentityKeyBytes)))
-                .Build();
         }
     }
 }
