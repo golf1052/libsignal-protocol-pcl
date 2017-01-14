@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>golf1052, langboost</authors>
+    <owners>golf1052, langboost</owners>
+    <licenseUrl>https://github.com/golf1052/libsignal-protocol-pcl/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/golf1052/libsignal-protocol-pcl</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Signal Protocol as a C# portable class library, based on https://github.com/WhisperSystems/libsignal-protocol-java</description>
+    <releaseNotes>Updated to version 2.4.0 of libsignal-protocol-java</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>signal</tags>
+  </metadata>
+</package>

@@ -99,10 +99,6 @@
     <Compile Include="fingerprint\NumericFingerprintGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\curve25519-pcl\curve25519\curve25519\curve25519.csproj">
-      <Project>{a7089355-5735-4e2b-929b-e7d727e3e41a}</Project>
-      <Name>curve25519</Name>
-    </ProjectReference>
     <ProjectReference Include="..\signal-protocol-pcl\signal-protocol-pcl.csproj">
       <Project>{28969cf5-0cec-4b94-b5cc-bdf648a66e70}</Project>
       <Name>signal-protocol-pcl</Name>

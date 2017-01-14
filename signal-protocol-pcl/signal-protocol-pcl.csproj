@@ -8,7 +8,7 @@
     <ProjectGuid>{28969CF5-0CEC-4B94-B5CC-BDF648A66E70}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>signal_protocol_pcl</RootNamespace>
+    <RootNamespace>libsignal</RootNamespace>
     <AssemblyName>signal-protocol-pcl</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\signal-protocol-pcl.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -133,6 +134,10 @@
     <None Include="protobuf\WhisperTextProtocol.proto" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="curve25519-pcl, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\curve25519-pcl.1.1.0\lib\portable45-net45+win8\curve25519-pcl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.ProtocolBuffers, Version=2.4.1.555, Culture=neutral, PublicKeyToken=55f7125234beb589, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.ProtocolBuffers.2.4.1.555\lib\portable-net40+sl4+sl5+wp7+wp8+win8\Google.ProtocolBuffers.dll</HintPath>
       <Private>True</Private>
@@ -169,12 +174,6 @@
       <HintPath>..\packages\Validation.2.2.8\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\curve25519-pcl\curve25519\curve25519\curve25519.csproj">
-      <Project>{a7089355-5735-4e2b-929b-e7d727e3e41a}</Project>
-      <Name>curve25519</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
